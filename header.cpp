@@ -45,6 +45,5 @@ void data::print(data &data)
         std::cout<<std::endl;
 
     }
-    std::cout<<std::endl;
 
 }

@@ -3,7 +3,7 @@
 
 int main()
 {
-    std::cout << BOLDGREEN << "--------------------------> TRIHYBRID CROSS <--------------------------" << RESET << std::endl;
+    std::cout << BOLDGREEN << "--------------------------> TRIHYBRIDCROSS <--------------------------" << RESET << std::endl;
 
     data data;
 
@@ -12,6 +12,8 @@ int main()
     data.populate(data);
 
     data.print(data);
+
+    std::cout<< BOLDGREEN << "----------------------------------------------------------------------" << RESET;
 
     return 0;
 }
