@@ -28,7 +28,6 @@ void data::populate(data &data)
         }
     }
 
-    std::cout<<"Finished populating"<<std::endl;
 }
 
 void data::print(data &data)
@@ -37,8 +36,10 @@ void data::print(data &data)
     {
         for(int j=0; j< data.firstRow.size() + 1; j++)
         {
-            data.arr[j][i].empty() ? std::cout<<"." : std::cout<<data.arr[j][i];
-            data.arr[j][i].size()<6 ? std::cout<<"\t\t" : std::cout<<"\t";
+            if(data.arr[j][i].empty())
+                std::cout<<".";
+
+            data.arr[j][i].size()<6 ? std::cout<<BOLDBLUE<<data.arr[j][i]<<RESET<<"\t\t" : std::cout<<data.arr[j][i]<<"\t";
 
         }
         std::cout<<std::endl;
