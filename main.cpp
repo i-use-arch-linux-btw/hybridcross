@@ -3,17 +3,20 @@
 
 int main()
 {
-    std::cout << BOLDGREEN << "--------------------------> TRIHYBRIDCROSS <--------------------------" << RESET << std::endl;
-
     data data;
 
-    data.firstRow = {"YRS", "YRs", "YrS", "Yrs", "yRS", "yRs", "yrS", "yrs"};
-    data.firstColumn = {"YRS", "YRs", "YrS", "Yrs", "yRS", "yRs", "yrS", "yrs"};
-    data.populate(data);
+    data.parent1 = "YyRrSs";
+    data.parent2 = "YyRrSs";
 
+    data.makeGametes(data);
+
+    data.populate(data);
     data.print(data);
 
-    std::cout<< BOLDGREEN << "----------------------------------------------------------------------" << RESET;
+    data.sortGenotypes(data);
+    data.print(data);
+
+    data.countGenotypes(data,1);
 
     return 0;
 }

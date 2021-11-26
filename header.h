@@ -7,14 +7,23 @@
 
 #include <vector>
 #include <string>
+#include <unordered_map>
 
 struct data
 {
+    int printLog=0;
+    std::string parent1;
+    std::string parent2;
     std::string arr[9][9];
     std::vector<std::string> firstRow;
     std::vector<std::string> firstColumn;
+    std::unordered_map<std::string, int> genotypesCount;
 
+    static void makeGametes(data &data);
     static void populate(data &data);
+    static void sortGenotypes(data &data);
+    static void countGenotypes(data &data, int outputToConsole=1);
+    static void calcGenotypicRatio(data &data, int outputToConsole=1);
     static void print(data &data);
 };
 
