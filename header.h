@@ -19,9 +19,14 @@ struct Data
     std::vector<std::string> firstColumn;
     std::unordered_map<std::string, int> genotypesCount;
     std::unordered_map<std::string, int> phenotypesCount;
+    std::vector<std::string> genes1;
+    std::vector<std::string> genes2;
 
     static void checkParents(Data &data);
     static void makeGametes(Data &data);
+
+    static void genGametes(Data &data, std::string partialGamete = "", int geneCounter = 0);
+
     static void populate(Data &data);
     static void sortGenotypes(Data &data);
     static void countGenotypes(Data &data, int outputToConsole=1);

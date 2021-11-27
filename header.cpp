@@ -16,15 +16,21 @@ void Data::checkParents(Data &data)
 
 void Data::makeGametes(Data &data)
 {
-    // better method im trying to make
-    while(data.firstRow.size() != std::pow(2,data.parent1.size()/2) and data.firstColumn.size() != std::pow(2,data.parent1.size()/2) )
+    // new method
+
+    // separate all genes pairs out here
+    for(int i=0; i<data.parent1.size(); i+=2)
     {
-        std::string gamete;
+        std::string t1;
+        std::string t2;
 
-        for(int i=0; i<data.parent1.size()/2; i++)
-        {
+        t1+=data.parent1[i];
+        t1+=data.parent1[i+1];
+        t2+=data.parent2[i];
+        t2+=data.parent2[i+1];
 
-        }
+        data.genes1.push_back(t1);
+        data.genes2.push_back(t2);
     }
 
     // old method
@@ -52,6 +58,21 @@ void Data::makeGametes(Data &data)
         }
     }
 }
+
+void Data::genGametes(Data &data, std::string partialGamete, int geneCounter)
+{
+ for(auto i : data.genes1[geneCounter])
+ {
+     partialGamete += i;
+
+     for(geneCounter=0; geneCounter<2; geneCounter++)
+     {
+         genGametes(data, partialGamete, geneCounter);
+     }
+    std::cout<<partialGamete<<std::endl;
+ }
+}
+
 
 void Data::populate(Data &data)
 {
