@@ -8,6 +8,8 @@ int main()
     data.parent1 = "YyRrSs";
     data.parent2 = "YyRrSs";
 
+    data.checkParents(data);
+
     data.makeGametes(data);
 
     data.populate(data);

@@ -2,10 +2,31 @@
 // Created by ap on 11/25/21.
 //
 #include <iostream>
+#include <cmath>
 #include "header.h"
+
+void Data::checkParents(Data &data)
+{
+    if(data.parent1.size() != data.parent2.size())
+    {
+        std::cerr << "Check parents genes.";
+        exit(1);
+    }
+}
 
 void Data::makeGametes(Data &data)
 {
+    while(data.firstRow.size() != std::pow(2,data.parent1.size()/2) and data.firstColumn.size() != std::pow(2,data.parent1.size()/2) )
+    {
+        std::string gamete;
+
+        for(int i=0; i<data.parent1.size()/2; i++)
+        {
+
+        }
+    }
+
+
     for(int i=0; i<2; i++) // Yy
     {
         for(int j=2; j<4; j++)

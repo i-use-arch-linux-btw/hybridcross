@@ -20,6 +20,7 @@ struct Data
     std::unordered_map<std::string, int> genotypesCount;
     std::unordered_map<std::string, int> phenotypesCount;
 
+    static void checkParents(Data &data);
     static void makeGametes(Data &data);
     static void populate(Data &data);
     static void sortGenotypes(Data &data);
