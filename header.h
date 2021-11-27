@@ -9,7 +9,7 @@
 #include <string>
 #include <unordered_map>
 
-struct data
+struct Data
 {
     int printLog=0;
     std::string parent1;
@@ -18,13 +18,14 @@ struct data
     std::vector<std::string> firstRow;
     std::vector<std::string> firstColumn;
     std::unordered_map<std::string, int> genotypesCount;
+    std::unordered_map<std::string, int> phenotypesCount;
 
-    static void makeGametes(data &data);
-    static void populate(data &data);
-    static void sortGenotypes(data &data);
-    static void countGenotypes(data &data, int outputToConsole=1);
-    static void calcGenotypicRatio(data &data, int outputToConsole=1);
-    static void print(data &data);
+    static void makeGametes(Data &data);
+    static void populate(Data &data);
+    static void sortGenotypes(Data &data);
+    static void countGenotypes(Data &data, int outputToConsole=1);
+    static void calcPhenotypicRatio(Data &data, int outputToConsole= 1);
+    static void print(Data &data);
 };
 
 //the following are UBUNTU/LINUX, and MacOS ONLY terminal color codes.

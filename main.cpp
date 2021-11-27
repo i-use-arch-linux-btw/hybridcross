@@ -3,7 +3,7 @@
 
 int main()
 {
-    data data;
+    Data data;
 
     data.parent1 = "YyRrSs";
     data.parent2 = "YyRrSs";
@@ -17,6 +17,8 @@ int main()
     data.print(data);
 
     data.countGenotypes(data,1);
+
+    data.calcPhenotypicRatio(data, 1);
 
     return 0;
 }

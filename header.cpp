@@ -4,7 +4,7 @@
 #include <iostream>
 #include "header.h"
 
-void data::makeGametes(data &data)
+void Data::makeGametes(Data &data)
 {
     for(int i=0; i<2; i++) // Yy
     {
@@ -31,7 +31,7 @@ void data::makeGametes(data &data)
     }
 }
 
-void data::populate(data &data)
+void Data::populate(Data &data)
 {
     for(int i=0; i<data.firstRow.size(); i++) // first column and row
     {
@@ -57,7 +57,7 @@ void data::populate(data &data)
 
 }
 
-void data::sortGenotypes(data &data)
+void Data::sortGenotypes(Data &data)
 {
     for(int i = 1; i<sizeof(data.arr)/sizeof(data.arr[0]); i++)
     {
@@ -76,7 +76,7 @@ void data::sortGenotypes(data &data)
     }
 }
 
-void data::countGenotypes(data &data, int outputToConsole)
+void Data::countGenotypes(Data &data, int outputToConsole)
 {
     for(int i=1; i<data.firstColumn.size()+1; i++) // iterating through all genotype cells
     {
@@ -84,16 +84,17 @@ void data::countGenotypes(data &data, int outputToConsole)
         {
             data.genotypesCount[data.arr[i][j]] += 1;
         }
-
     }
     std::cout<<std::endl;
 
     int counter = 0;
-    if (outputToConsole)
+    if(outputToConsole)
     {
+        std::cout<<BOLDGREEN<<"\nGenotype: number"<<RESET<<std::endl;
+
         for(auto count : data.genotypesCount)
         {
-            std::cout << count.first << " " << count.second << "\n";
+            std::cout << count.first << ": " << count.second << "\n";
             counter += count.second;
         }
 
@@ -102,12 +103,45 @@ void data::countGenotypes(data &data, int outputToConsole)
 
 }
 
-void data::calcGenotypicRatio(data &data, int outputToConsole)
+void Data::calcPhenotypicRatio(Data &data, int outputToConsole)
 {
+
+    for(auto count : data.genotypesCount)
+    {
+
+        std::string phenotype;
+
+        for(int i=0; i<count.first.size(); i+=2)
+        {
+            if(isupper(count.first[i]) or isupper(count.first[i+1]))
+            {
+                (isupper(count.first[i])) ? phenotype += count.first[i] : phenotype += count.first[i+1]; // if either is capital, then added. otherwise, lowercase is added.
+            } else {
+                phenotype += count.first[i];
+            }
+
+        }
+
+        data.phenotypesCount[phenotype] += count.second;
+
+    }
+
+    int counter = 0;
+    if(outputToConsole)
+    {
+        std::cout<<BOLDGREEN<<"\nPhenotype: number"<<RESET<<std::endl;
+        for(auto count : data.phenotypesCount)
+        {
+            std::cout << count.first << ": " << count.second << "\n";
+            counter += count.second;
+        }
+
+        std::cout<<BOLDBLUE<<"Total: "<<counter<<RESET<<std::endl;
+    }
 
 }
 
-void data::print(data &data)
+void Data::print(Data &data)
 {
     std::cout << BOLDGREEN <<"\n\n-------------------------> TRIHYBRID CROSS <-------------------------" << data.printLog << RESET << std::endl;
 
@@ -115,10 +149,9 @@ void data::print(data &data)
     {
         for(int j=0; j< data.firstRow.size() + 1; j++)
         {
-            if(data.arr[j][i].empty())
-                std::cout<<".";
+            if(data.arr[j][i].empty()) std::cout<<".";
 
-            data.arr[j][i].size()<6 ? std::cout<<BOLDBLUE<<data.arr[j][i]<<RESET<<"\t\t" : std::cout<<data.arr[j][i]<<"\t";
+            data.arr[j][i].size()<=data.parent1.size()/2 ? std::cout<<BOLDBLUE<<data.arr[j][i]<<RESET<<"\t\t" : std::cout<<data.arr[j][i]<<"\t";
 
         }
         std::cout<<std::endl;
