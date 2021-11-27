@@ -16,6 +16,7 @@ void Data::checkParents(Data &data)
 
 void Data::makeGametes(Data &data)
 {
+    // better method im trying to make
     while(data.firstRow.size() != std::pow(2,data.parent1.size()/2) and data.firstColumn.size() != std::pow(2,data.parent1.size()/2) )
     {
         std::string gamete;
@@ -26,7 +27,7 @@ void Data::makeGametes(Data &data)
         }
     }
 
-
+    // old method
     for(int i=0; i<2; i++) // Yy
     {
         for(int j=2; j<4; j++)
