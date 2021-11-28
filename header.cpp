@@ -2,7 +2,6 @@
 // Created by ap on 11/25/21.
 //
 #include <iostream>
-#include <math.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
