@@ -6,23 +6,21 @@ int main()
 {
     Data data;
 
-    data.parent1 = "YyRrSsAa";
-    data.parent2 = "YyRrSsAa";
+    data.parent1 = "YyRrSs";
+    data.parent2 = "YyRrSs";
 
     data.checkParents(data);
     data.prepVArr(data);
     data.generate_genes(data);
 
     data.populate(data);
-    std::cout<<"Populated"<<std::endl;
-    data.print(data);
 
     data.sortGenotypes(data);
     data.print(data);
 
-    data.countGenotypes(data,0);
+    data.countGenotypes(data,1);
 
-    data.calcPhenotypicRatio(data, 0);
+    data.calcPhenotypicRatio(data, 1);
 
     return 0;
 }
