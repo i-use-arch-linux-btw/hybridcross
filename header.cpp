@@ -2,8 +2,14 @@
 // Created by ap on 11/25/21.
 //
 #include <iostream>
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include <cmath>
 #include "header.h"
+
+
 
 void Data::checkParents(Data &data)
 {
@@ -14,63 +20,71 @@ void Data::checkParents(Data &data)
     }
 }
 
-void Data::makeGametes(Data &data)
+void Data::prepVArr(Data &data)
 {
-    // new method
+    int size = pow(2,data.parent1.size()/2);
 
-    // separate all genes pairs out here
-    for(int i=0; i<data.parent1.size(); i+=2)
-    {
-        std::string t1;
-        std::string t2;
+    data.vArr.reserve(size+1); // reserves memory for the array. +1 because of headers.
 
-        t1+=data.parent1[i];
-        t1+=data.parent1[i+1];
-        t2+=data.parent2[i];
-        t2+=data.parent2[i+1];
+    for (int i = 0; i <= size; i++)
+        data.vArr[i].reserve(size+1);
+}
 
-        data.genes1.push_back(t1);
-        data.genes2.push_back(t2);
+void Data::generate_genes(Data &data) // length is number of letter
+{
+    const char *parent1 = data.parent1.c_str();
+    const char *parent2 = data.parent2.c_str();
+
+
+    int length = strlen(parent1);
+    if (length % 2 == 1) {
+        return;
+    }
+    int size = pow(2, length / 2); //number of gametes
+
+    char * row1[size];
+    char * row2[size];
+
+    for (int i = 0; i < size; i++) {
+        row1[i] = (char*) malloc(length / 2 + 1);
+        row2[i] = (char*) malloc(length / 2 + 1);
     }
 
-    // old method
-    for(int i=0; i<2; i++) // Yy
-    {
-        for(int j=2; j<4; j++)
-        {
-            for(int k=4; k<6; k++)
-            {
-                std::string gamete1 = "";
-                std::string gamete2 = "";
+    data.recurse_gen(parent1, length / 2, 0, 0, row1);
 
-                gamete1.push_back(data.parent1[i]);
-                gamete1.push_back(data.parent1[j]);
-                gamete1.push_back(data.parent1[k]);
+    for (int i = 0; i < size; i++) {
+        printf("%s\n", row1[i]);
+        data.firstRow.push_back(row1[i]);
+    }
+    for (int i = 0; i < size; i++) {
+        free(row1[i]);
+    }
 
-                gamete2.push_back(data.parent2[i]);
-                gamete2.push_back(data.parent2[j]);
-                gamete2.push_back(data.parent2[k]);
+    data.recurse_gen(parent2, length / 2, 0, 0, row2);
 
-                data.firstRow.push_back(gamete1);
-                data.firstColumn.push_back(gamete2);
-
-            }
-        }
+    for (int i = 0; i < size; i++) {
+        printf("%s\n", row2[i]);
+        data.firstColumn.push_back(row2[i]);
+        free(row2[i]);
     }
 }
 
-void Data::genGametes(Data &data, std::string partialGamete, int geneCounter)
+void Data::recurse_gen(const char *parent, int length, int depth, int start,
+                       char *row[]) //start is the start of the data being operated on
 {
- for(auto i : data.genes1[geneCounter])
- {
-     partialGamete += i;
 
-     for(geneCounter=0; geneCounter<2; geneCounter++)
-     {
-         genGametes(data, partialGamete, geneCounter);
-     }
-    std::cout<<partialGamete<<std::endl;
- }
+    int half = pow(2, length - depth - 1);      //half the size of the data
+    for (int i = start; i < half + start; i++)  //iterates through 2 halfs
+    {
+        row[i][depth] = parent[2 * depth];                 //first half first parent
+        row[i + half][depth] = parent[2 * depth + 1];      //first half second parent
+    }
+    if (half == 1)
+    {
+        return; //end when data operating on is size 2
+    }
+    recurse_gen(parent, length, depth + 1, start, row);           //first half of section
+    recurse_gen(parent, length, depth + 1, half + start, row);    //second half
 }
 
 
@@ -78,23 +92,24 @@ void Data::populate(Data &data)
 {
     for(int i=0; i<data.firstRow.size(); i++) // first column and row
     {
-        data.arr[i+1][0] = data.firstRow[i];
-        data.arr[0][i+1] = data.firstColumn[i];
+        data.vArr[i+1][0] = data.firstRow[i];
+        data.vArr[0][i+1] = data.firstColumn[i];
 
     }
 
-    for(int i=1; i<9; i++) // all the middle
+    for(int i=1; i<pow(2,data.parent1.size()/2)+1; i++) // all the middle
     {
-        for(int j=1; j<9; j++)
+
+        for(int j=1; j<pow(2,data.parent1.size()/2)+1; j++)
         {
             std::string cross;
 
-            for(int k=0; k<data.arr[j][0].size(); k++)
+            for(int k=0; k<data.vArr[j][0].size(); k++)
             {
-                cross += data.arr[j][0][k];
-                cross += data.arr[0][i][k];
+                cross += data.vArr[j][0][k];
+                cross += data.vArr[0][i][k];
             }
-            data.arr[j][i]=cross;
+            data.vArr[j][i]=cross;
         }
     }
 
@@ -102,17 +117,19 @@ void Data::populate(Data &data)
 
 void Data::sortGenotypes(Data &data)
 {
-    for(int i = 1; i<sizeof(data.arr)/sizeof(data.arr[0]); i++)
+
+    for(int i = 1; i<pow(2, data.parent1.size()/2)+1; i++)
     {
-        for(int j = 1; j<sizeof(data.arr)/sizeof(data.arr[0]); j++)
+        for(int j = 1; j<pow(2, data.parent1.size()/2)+1; j++)
         {
             for(int k = 0; k<data.parent1.size(); k++)
             {
-                if(data.arr[i][j][2*k]>data.arr[i][j][2*k+1]) // is the first lowercase and second upper?
+                if(data.vArr[i][j][2*k]>data.vArr[i][j][2*k+1]) // is the first lowercase and second upper?
                 {
-                    char swap = data.arr[i][j][2*k];
-                    data.arr[i][j][2*k] = data.arr[i][j][2*k+1];
-                    data.arr[i][j][2*k+1] = swap;
+                    char swap = data.vArr[i][j][2*k];
+
+                    data.vArr[i][j][2*k] = data.vArr[i][j][2*k+1];
+                    data.vArr[i][j][2*k+1] = swap;
                 }
             }
         }
@@ -125,7 +142,7 @@ void Data::countGenotypes(Data &data, int outputToConsole)
     {
         for(int j=1; j< data.firstRow.size() + 1; j++)
         {
-            data.genotypesCount[data.arr[i][j]] += 1;
+            data.genotypesCount[data.vArr[i][j]] += 1; // adds 1 to the map of different genotypes
         }
     }
     std::cout<<std::endl;
@@ -186,15 +203,16 @@ void Data::calcPhenotypicRatio(Data &data, int outputToConsole)
 
 void Data::print(Data &data)
 {
+
     std::cout << BOLDGREEN <<"\n\n-------------------------> TRIHYBRID CROSS <-------------------------" << data.printLog << RESET << std::endl;
 
     for(int i=0; i<data.firstColumn.size()+1; i++)
     {
         for(int j=0; j< data.firstRow.size() + 1; j++)
         {
-            if(data.arr[j][i].empty()) std::cout<<".";
+            if(data.vArr[j][i].empty()) std::cout<<".";
 
-            data.arr[j][i].size()<=data.parent1.size()/2 ? std::cout<<BOLDBLUE<<data.arr[j][i]<<RESET<<"\t\t" : std::cout<<data.arr[j][i]<<"\t";
+            data.vArr[j][i].size()<=data.parent1.size()/2 ? std::cout<<BOLDBLUE<<data.vArr[j][i]<<RESET<<"\t\t" : std::cout<<data.vArr[j][i]<<"\t";
 
         }
         std::cout<<std::endl;

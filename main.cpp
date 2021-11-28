@@ -1,19 +1,20 @@
 #include <iostream>
+#include <math.h>
 #include "header.h"
 
 int main()
 {
     Data data;
 
-    data.parent1 = "YyRrSs";
-    data.parent2 = "YyRrSs";
+    data.parent1 = "YyRrSsAa";
+    data.parent2 = "YyRrSsAa";
 
     data.checkParents(data);
-
-    data.makeGametes(data);
-    data.genGametes(data);
+    data.prepVArr(data);
+    data.generate_genes(data);
 
     data.populate(data);
+    std::cout<<"Populated"<<std::endl;
     data.print(data);
 
     data.sortGenotypes(data);

@@ -11,27 +11,29 @@
 
 struct Data
 {
+
     int printLog=0;
     std::string parent1;
     std::string parent2;
-    std::string arr[9][9];
+    std::vector<std::vector<std::string>> vArr;  // dynamically sizable array using vectors
     std::vector<std::string> firstRow;
     std::vector<std::string> firstColumn;
     std::unordered_map<std::string, int> genotypesCount;
     std::unordered_map<std::string, int> phenotypesCount;
-    std::vector<std::string> genes1;
-    std::vector<std::string> genes2;
 
     static void checkParents(Data &data);
-    static void makeGametes(Data &data);
+    static void prepVArr(Data &data);
 
-    static void genGametes(Data &data, std::string partialGamete = "", int geneCounter = 0);
+    static void generate_genes(Data &data);
+    static void recurse_gen(const char *parent, int length, int depth, int start, char *row[]);
 
     static void populate(Data &data);
     static void sortGenotypes(Data &data);
     static void countGenotypes(Data &data, int outputToConsole=1);
     static void calcPhenotypicRatio(Data &data, int outputToConsole= 1);
     static void print(Data &data);
+
+
 };
 
 //the following are UBUNTU/LINUX, and MacOS ONLY terminal color codes.
