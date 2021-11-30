@@ -6,21 +6,21 @@ int main()
 {
     Data data;
 
-    data.parent1 = "YyRrSs";
-    data.parent2 = "YyRrSs";
+    data.parent1 = "AaBbCcddEEFfGgHhiI";
+    data.parent2 = "AabbccDdeEFfGgHhiI";
 
     data.checkParents(data);
     data.prepVArr(data);
     data.generate_genes(data);
 
     data.populate(data);
-
     data.sortGenotypes(data);
+
     data.print(data);
 
-    data.countGenotypes(data,1);
+    data.countGenotypes(data,0);
 
-    data.calcPhenotypicRatio(data, 1);
+    data.calcPhenotypicRatio(data, 0);
 
     return 0;
 }

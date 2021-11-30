@@ -54,8 +54,6 @@ void Data::generate_genes(Data &data) // length is number of letter
     for (int i = 0; i < size; i++) {
         printf("%s\n", row1[i]);
         data.firstRow.push_back(row1[i]);
-    }
-    for (int i = 0; i < size; i++) {
         free(row1[i]);
     }
 
@@ -209,10 +207,33 @@ void Data::print(Data &data)
     {
         for(int j=0; j< data.firstRow.size() + 1; j++)
         {
-            if(data.vArr[j][i].empty()) std::cout<<".";
+            if(data.vArr[j][i].empty())
+            {
+                std::cout<<".";
 
-            data.vArr[j][i].size()<=data.parent1.size()/2 ? std::cout<<BOLDBLUE<<data.vArr[j][i]<<RESET<<"\t\t" : std::cout<<data.vArr[j][i]<<"\t";
+                if(data.parent1.size()/2 > 3)
+                {
+                    std::cout<<"\t";
+                }
+            }
 
+
+            //data.vArr[j][i].size()<=data.parent1.size()/2 ? std::cout<<BOLDBLUE<<data.vArr[j][i]<<RESET<<"\t\t" : std::cout<<data.vArr[j][i]<<"\t";
+
+            if(data.vArr[j][i].size()<=data.parent1.size()/2)
+            {
+                switch(data.vArr[j][i].size())
+                {
+                    case(2):    std::cout<<BOLDBLUE<<data.vArr[j][i]<<RESET<<"\t\t"; break;
+                    case(3):    std::cout<<BOLDBLUE<<data.vArr[j][i]<<RESET<<"\t\t"; break;
+                    default:    std::cout<<BOLDBLUE<<data.vArr[j][i]<<RESET;
+                                for(int t = 0; t < data.parent1.size()/4; t++){
+                                    std::cout<<"\t";
+                                } break;
+                }
+            } else {
+                std::cout<<data.vArr[j][i]<<"\t";
+            }
         }
         std::cout<<std::endl;
 

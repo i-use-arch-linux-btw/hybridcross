@@ -12,10 +12,10 @@
 struct Data
 {
 
-    int printLog=0;
+    volatile int printLog=0;
     std::string parent1;
     std::string parent2;
-    std::vector<std::vector<std::string>> vArr;  // dynamically sizable array using vectors
+    std::vector<std::vector<std::string> > vArr;  // dynamically sizable array using vectors
     std::vector<std::string> firstRow;
     std::vector<std::string> firstColumn;
     std::unordered_map<std::string, int> genotypesCount;
