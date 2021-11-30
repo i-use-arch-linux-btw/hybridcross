@@ -209,12 +209,8 @@ void Data::print(Data &data)
         {
             if(data.vArr[j][i].empty())
             {
-                std::cout<<".";
+                std::cout<<".\t";
 
-                if(data.parent1.size()/2 > 3)
-                {
-                    std::cout<<"\t";
-                }
             }
 
 

@@ -6,8 +6,8 @@ int main()
 {
     Data data;
 
-    data.parent1 = "AaBbCcddEEFfGgHhiI";
-    data.parent2 = "AabbccDdeEFfGgHhiI";
+    data.parent1 = "ssbbcceeffgghh";
+    data.parent2 = "ssbbcceeffgghh";
 
     data.checkParents(data);
     data.prepVArr(data);
